@@ -1,0 +1,17 @@
+[
+{
+  "modid": "Cryochamber",
+  "name": "Cryochamber",
+  "description": "Time travel made easy.",
+  "version": "0.1",
+  "credits": "Created by Arimil",
+  "logoFile": "",
+  "mcversion": "",
+  "url": "",
+  "updateUrl": "",
+  "authors": [ "Arimil" ],
+  "parent":"",
+  "screenshots": [],
+  "dependencies": []
+}
+]
