@@ -79,11 +79,6 @@ public class BlockCryochamber extends Block {
     public boolean onBlockActivated(World world, int x, int y, int z, 
             EntityPlayer player, int side, float px, float py, float pz)
     {
-        String validSources = "";
-        for (int z1 = 0; References.valid_power_sources.length > z1; z1++){
-            validSources += " "+References.valid_power_sources[z1];
-        }
-        System.out.println("Valid Power Sources:" + validSources);
         for (int i = 0; player.inventory.mainInventory.length > i; i++){
             if (player.inventory.mainInventory[i] != null &&
                     Arrays.asList(References.valid_power_sources).contains(player.inventory.mainInventory[i].itemID) &&
