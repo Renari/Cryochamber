@@ -22,7 +22,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod( modid = References.MOD_ID, name = References.MOD_NAME, version = References.VERSION )
+@Mod( modid = References.MOD_ID, name = References.MOD_NAME, version = References.VERSION, dependencies = References.DEPENDENCIES )
 @NetworkMod( clientSideRequired = true, serverSideRequired = true)
 public class Cryochamber {
     

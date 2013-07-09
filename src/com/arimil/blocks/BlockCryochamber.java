@@ -1,5 +1,6 @@
 package com.arimil.blocks;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import com.arimil.cryochamber.Cryochamber;
@@ -9,13 +10,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import ic2.api.item.Items;;
+import ic2.api.item.ElectricItem;
 
 public class BlockCryochamber extends Block {
     
@@ -79,37 +79,22 @@ public class BlockCryochamber extends Block {
     public boolean onBlockActivated(World world, int x, int y, int z, 
             EntityPlayer player, int side, float px, float py, float pz)
     {
-        ItemStack crystal = Items.getItem("energyCrystal");
-        if (player.inventory.hasItem(crystal.itemID))
-        {
-            for (int i = 0; player.inventory.mainInventory.length > i; i++){
-                if (player.inventory.mainInventory[i] != null &&
-                    player.inventory.mainInventory[i].itemID == crystal.itemID &&
-                    player.inventory.mainInventory[i].getItemDamage() == 1){
-                    
-                    player.inventory.mainInventory[i].setItemDamage(26);
-                    
-                    PotionEffect nausea = new PotionEffect(9, References.nausea_duration * 20, 0);
-                    PotionEffect blindness = new PotionEffect(15, References.blindness_duration * 20, 0);
-                    PotionEffect slowness = new PotionEffect(2, References.slowness_duration * 20, 0);
-                    PotionEffect fatigue = new PotionEffect(4, References.fatigue_duration * 20, 0);
-                    PotionEffect hunger = new PotionEffect(17, References.hunger_duration * 20, 0);
-                    PotionEffect weakness = new PotionEffect(18, References.weakness_druation * 20, 0);
-                    player.addPotionEffect(nausea);
-                    player.addPotionEffect(blindness);
-                    player.addPotionEffect(hunger);
-                    player.addPotionEffect(slowness);
-                    player.addPotionEffect(fatigue);
-                    player.addPotionEffect(weakness);
-                    
-                    for (int j = 0; j < MinecraftServer.getServer().worldServers.length; ++j)
-                    {
-                        MinecraftServer.getServer().worldServers[j].setWorldTime(0);
-                    }
-                }
+        String validSources = "";
+        for (int z1 = 0; References.valid_power_sources.length > z1; z1++){
+            validSources += " "+References.valid_power_sources[z1];
+        }
+        System.out.println("Valid Power Sources:" + validSources);
+        for (int i = 0; player.inventory.mainInventory.length > i; i++){
+            if (player.inventory.mainInventory[i] != null &&
+                    Arrays.asList(References.valid_power_sources).contains(player.inventory.mainInventory[i].itemID) &&
+                    ElectricItem.manager.getCharge(player.inventory.mainInventory[i]) >= References.power_usage){
+                
+                ElectricItem.manager.discharge(player.inventory.mainInventory[i], References.power_usage, 3, true, false);
+                cryosleep(player);
+                return true;
             }
         }
-        return true;
+        return false;
     }
     @Override
     public void registerIcons(IconRegister par1IconRegister)
@@ -118,6 +103,25 @@ public class BlockCryochamber extends Block {
         sideIcon = par1IconRegister.registerIcon("cryochamber:cryochamber_side");
         frontTopIcon = par1IconRegister.registerIcon("cryochamber:cryochamber_front_top");
         frontBottomIcon = par1IconRegister.registerIcon("cryochamber:cryochamber_front_bottom");
+    }
+    private void cryosleep(EntityPlayer player){
+        PotionEffect nausea = new PotionEffect(9, References.nausea_duration * 20, 0);
+        PotionEffect blindness = new PotionEffect(15, References.blindness_duration * 20, 0);
+        PotionEffect slowness = new PotionEffect(2, References.slowness_duration * 20, 0);
+        PotionEffect fatigue = new PotionEffect(4, References.fatigue_duration * 20, 0);
+        PotionEffect hunger = new PotionEffect(17, References.hunger_duration * 20, 0);
+        PotionEffect weakness = new PotionEffect(18, References.weakness_druation * 20, 0);
+        player.addPotionEffect(nausea);
+        player.addPotionEffect(blindness);
+        player.addPotionEffect(hunger);
+        player.addPotionEffect(slowness);
+        player.addPotionEffect(fatigue);
+        player.addPotionEffect(weakness);
+           
+        for (int j = 0; j < MinecraftServer.getServer().worldServers.length; ++j)
+        {
+            MinecraftServer.getServer().worldServers[j].setWorldTime(0);
+        }
     }
 
 }
