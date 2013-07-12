@@ -3,6 +3,8 @@ Cryochamber
 
 A Minecraft mod intended to work with IC2 and Galacticraft making it so you can sleep for 13 days on the moon.
 
+##Download:
+http://renari.github.io/Cryochamber/
 
 ##Changelog:
 ####0.2:
