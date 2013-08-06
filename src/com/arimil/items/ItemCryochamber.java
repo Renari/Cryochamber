@@ -60,8 +60,8 @@ public class ItemCryochamber extends Item {
         par0World.notifyBlocksOfNeighborChange(par1, par2, par3, par5Block.blockID);
         par0World.notifyBlocksOfNeighborChange(par1, par2 + 1, par3, par5Block.blockID);
     }
-    private int getFacing(EntityLiving player){
-        int f = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+    private int getFacing(EntityPlayer par2EntityPlayer){
+        int f = MathHelper.floor_double((double)(par2EntityPlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
         switch (f){
             case 0:
                 f = 2;

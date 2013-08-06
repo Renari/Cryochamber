@@ -7,6 +7,9 @@ A Minecraft mod intended to work with IC2 and Galacticraft making it so you can 
 http://renari.github.io/Cryochamber/
 
 ##Changelog:
+####0.3:
+* update to minecraft 1.6.2
+
 ####0.2:
 * fix for energy crystal not consuming energy
 * lapotron crystal is now a valid energy source
