@@ -15,6 +15,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import ic2.api.item.ElectricItem;
 
 public class BlockCryochamber extends Block {
@@ -112,11 +113,8 @@ public class BlockCryochamber extends Block {
         player.addPotionEffect(slowness);
         player.addPotionEffect(fatigue);
         player.addPotionEffect(weakness);
-           
-        for (int j = 0; j < MinecraftServer.getServer().worldServers.length; ++j)
-        {
-            MinecraftServer.getServer().worldServers[j].setWorldTime(0);
-        }
+        
+        DimensionManager.getWorld(player.dimension).setWorldTime(0);
     }
 
 }
